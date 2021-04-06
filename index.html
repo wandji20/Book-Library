@@ -9,8 +9,31 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  
   <div class="container">
-    <table class="table mt-5">
+    <button type="button" class="btn btn-dark my-3 collapsible">Add a new book</button>
+
+    <form class="content">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" aria-describedby="titleHelp">
+      </div>
+      <div class="mb-3">
+        <label for="author" class="form-label">Author</label>
+        <input type="text" class="form-control" id="author">
+      </div>
+      <div class="mb-3">
+        <label for="p_year" class="form-label">Publication Year</label>
+        <input type="text" class="form-control" id="p_year">
+      </div>
+      <div class="mb-3">
+        <label for="city" class="form-label">City</label>
+        <input type="text" class="form-control" id="city">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <table class="table">
       <thead>
         <tr>
           <th scope="col">Title</th>
