@@ -10,41 +10,31 @@
 </head>
 <body>
   
+  <button type="button" class="btn btn-dark my-3 collapsible">Add a new book</button>
+
+  <form class="content form" >
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" class="form-control" id="title" aria-describedby="titleHelp">
+    </div>
+    <div class="mb-3">
+      <label for="author" class="form-label">Author</label>
+      <input type="text" class="form-control" id="author">
+    </div>
+    <div class="mb-3">
+      <label for="p_year" class="form-label">Publication Year</label>
+      <input type="text" class="form-control" id="p_year">
+    </div>
+    <div class="mb-3">
+      <label for="city" class="form-label">City</label>
+      <input type="text" class="form-control" id="city">
+    </div>
+    <button type="submit" class="btn btn-primary" id='f_submit'>Submit</button>
+  </form>
+  
+  
   <div class="container">
-    <button type="button" class="btn btn-dark my-3 collapsible">Add a new book</button>
-
-    <form class="content form" >
-      <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
-        <input type="text" class="form-control" id="title" aria-describedby="titleHelp">
-      </div>
-      <div class="mb-3">
-        <label for="author" class="form-label">Author</label>
-        <input type="text" class="form-control" id="author">
-      </div>
-      <div class="mb-3">
-        <label for="p_year" class="form-label">Publication Year</label>
-        <input type="text" class="form-control" id="p_year">
-      </div>
-      <div class="mb-3">
-        <label for="city" class="form-label">City</label>
-        <input type="text" class="form-control" id="city">
-      </div>
-      <button type="submit" class="btn btn-primary " id='f_submit'>Submit</button>
-    </form>
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Title</th>
-          <th scope="col">Author</th>
-          <th scope="col">Publication Year</th>
-          <th scope="col">City</th>
-        </tr>
-      </thead>
-      <tbody id='t_body'>    
-      </tbody>
-    </table>
+  
   </div>
   <script src="main.js"></script>
 </body>
