@@ -13,7 +13,7 @@
   <div class="container">
     <button type="button" class="btn btn-dark my-3 collapsible">Add a new book</button>
 
-    <form class="content">
+    <form class="content form" >
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
         <input type="text" class="form-control" id="title" aria-describedby="titleHelp">
@@ -30,7 +30,7 @@
         <label for="city" class="form-label">City</label>
         <input type="text" class="form-control" id="city">
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary " id='f_submit'>Submit</button>
     </form>
 
     <table class="table">
@@ -42,14 +42,7 @@
           <th scope="col">City</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td><div id="d_area_1"></div></td>
-          <td><div id="d_area_2"></div></td>
-          <td><div id="d_area_3"></div></td>
-          <td><div id="d_area_4"></div></td>
-        </tr>
-       
+      <tbody id='t_body'>    
       </tbody>
     </table>
   </div>
