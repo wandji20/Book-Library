@@ -36,6 +36,15 @@ function changeRead() {
   saveLibrary();
 } 
 
+
+function removeBook(){
+  const {id} = this.parentNode;
+  library.splice(id, 1);
+  saveLibrary();
+  showBooks();
+
+}
+
 function showBooks() {
   container.innerHTML = '';
   for (let i = 0; i < library.length; i += 1) {
@@ -50,10 +59,16 @@ function showBooks() {
     changeReadBtn.addEventListener('click', changeRead);
     changeReadBtn.textContent = "Change read status";
 
+    const removeBtn = document.createElement('button');
+    removeBtn.addEventListener('click', removeBook);
+    removeBtn.textContent = 'Remove Book';
+
     content.appendChild(text);
     content.appendChild(changeReadBtn);
-    // content.appendChild(removeBtn);
+    content.appendChild(removeBtn);
     container.appendChild(content);
+    
+
   }
 }
 
