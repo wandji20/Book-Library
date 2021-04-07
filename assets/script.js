@@ -40,8 +40,8 @@ function removeBook() {
   const { id } = this.parentNode;
   library.splice(id, 1);
   saveLibrary();
-  showBooks();
-} // eslint-disable-next-line no-use-before-define
+  showBooks(); // eslint-disable-next-line no-use-before-define
+} 
 
 function showBooks() {
   container.innerHTML = '';
