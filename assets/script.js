@@ -17,7 +17,7 @@ function Book(title, author, pages, read) {
   this.read = read;
 }
 
-Book.prototype.info = function Pro () {
+Book.prototype.info = function Pro() {
   const readAlready = this.read
     ? 'This book is already read!'
     : 'This book is not read yet!';
@@ -35,6 +35,13 @@ function changeRead() {
   paragraph.innerHTML = library[id].info();
   saveLibrary();
 }
+
+function removeBook() {
+  const { id } = this.parentNode;
+  library.splice(id, 1);
+  saveLibrary();
+  showBooks();
+} // eslint-disable-next-line no-use-before-define
 
 function showBooks() {
   container.innerHTML = '';
@@ -59,13 +66,6 @@ function showBooks() {
     content.appendChild(removeBtn);
     container.appendChild(content);
   }
-}
-
-function removeBook() {
-  const { id } = this.parentNode;
-  library.splice(id, 1);
-  saveLibrary();
-  showBooks();
 }
 
 function addBookToLibrary() {
