@@ -1,14 +1,14 @@
 let library = [];
-const container = document.querySelector('.container');
-const title = document.querySelector('#title');
-const author = document.querySelector('#author');
-const pages = document.querySelector('#pages');
-const read = document.querySelector('#read');
+const container = document.querySelector(".container");
+const title = document.querySelector("#title");
+const author = document.querySelector("#author");
+const pages = document.querySelector("#pages");
+const read = document.querySelector("#read");
 // const notRead = document.querySelector('#not-read');
-// const read = document.querySelectorAll('input[name="read-check"]'); 
-const button = document.querySelector('#btn');
-const form = document.querySelector('form');
-const newBookBtn = document.querySelector('#form');
+// const read = document.querySelectorAll('input[name="read-check"]');
+const button = document.querySelector("#btn");
+const form = document.querySelector("form");
+const newBookBtn = document.querySelector("#form");
 
 function Book(title, author, pages, read) {
   this.title = title;
@@ -17,10 +17,10 @@ function Book(title, author, pages, read) {
   this.read = read;
 }
 
-
-
 Book.prototype.info = function () {
-  const readAlready = (this.read) ? "This book is already read!" : "This book is not read yet!";
+  const readAlready = this.read
+    ? "This book is already read!"
+    : "This book is not read yet!";
   return `${this.title} by ${this.author}, ${this.pages} , ${readAlready}`;
 };
 
@@ -29,46 +29,42 @@ function saveLibrary() {
 }
 
 function changeRead() {
-  const {id} = this.parentNode;
-  const paragraph = this.parentNode.querySelector('p');
+  const { id } = this.parentNode;
+  const paragraph = this.parentNode.querySelector("p");
   library[id].read = !library[id].read;
   paragraph.innerHTML = library[id].info();
   saveLibrary();
-} 
+}
 
-
-function removeBook(){
-  const {id} = this.parentNode;
+function removeBook() {
+  const { id } = this.parentNode;
   library.splice(id, 1);
   saveLibrary();
   showBooks();
-
 }
 
 function showBooks() {
-  container.innerHTML = '';
+  container.innerHTML = "";
   for (let i = 0; i < library.length; i += 1) {
-    const content = document.createElement('div');
-    content.setAttribute('id', i);
-    const text = document.createElement('p');
+    const content = document.createElement("div");
+    content.setAttribute("id", i);
+    const text = document.createElement("p");
     text.textContent = library[i].info();
     content.appendChild(text);
     container.appendChild(content);
 
     const changeReadBtn = document.createElement("button");
-    changeReadBtn.addEventListener('click', changeRead);
+    changeReadBtn.addEventListener("click", changeRead);
     changeReadBtn.textContent = "Change read status";
 
-    const removeBtn = document.createElement('button');
-    removeBtn.addEventListener('click', removeBook);
-    removeBtn.textContent = 'Remove Book';
+    const removeBtn = document.createElement("button");
+    removeBtn.addEventListener("click", removeBook);
+    removeBtn.textContent = "Remove Book";
 
     content.appendChild(text);
     content.appendChild(changeReadBtn);
     content.appendChild(removeBtn);
     container.appendChild(content);
-    
-
   }
 }
 
@@ -82,8 +78,8 @@ function addBookToLibrary() {
 }
 
 function showForm() {
-  form.classList.toggle('hidden');
-  button.classList.toggle('hidden');
+  form.classList.toggle("hidden");
+  button.classList.toggle("hidden");
 }
 
 function loadLibrary() {
@@ -99,6 +95,6 @@ if (localStorage.lib) {
   showBooks();
 }
 
-button.addEventListener('click', addBookToLibrary);
+button.addEventListener("click", addBookToLibrary);
 
-newBookBtn.addEventListener('click', showForm);
+newBookBtn.addEventListener("click", showForm);
