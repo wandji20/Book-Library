@@ -39,9 +39,9 @@ function changeRead() {
 function removeBook() {
   const { id } = this.parentNode;
   library.splice(id, 1);
-  saveLibrary();
-  showBooks(); // eslint-disable-next-line no-use-before-define
-} 
+  saveLibrary(); // eslint-disable-next-line no-use-before-define
+  showBooks();
+}
 
 function showBooks() {
   container.innerHTML = '';
