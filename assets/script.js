@@ -2,25 +2,29 @@ let library = [];
 const container = document.querySelector('.container');
 const title = document.querySelector('#title');
 const author = document.querySelector('#author');
-const p_year = document.querySelector('#p_year');
-const city = document.querySelector('#city');
+const pages = document.querySelector('#pages');
+const read = document.querySelector('#read');
+const notRead = document.querySelector('#not-read');
+// const readCheck = document.getElementsByName('read-check') 
 const button = document.querySelector('#btn');
 const form = document.querySelector('form');
 const newBookBtn = document.querySelector('#form');
 
-function Book(title, author, p_year, city) {
+
+function Book(title, author, pages, read) {
   this.title = title;
   this.author = author;
-  this.p_year = p_year;
-  this.city = city;
+  this.pages = pages;
+  this.read = read;
 }
 
 Book.prototype.info = function () {
-  return `${this.title} by ${this.author}, ${this.pages} pages, ${this.p_year} p_year, ${this.city} city`;
+  
+  return `${this.title} by ${this.author}, ${this.pages} , Read: ${this.read} `;
 };
 
 function saveLibrary() {
-  localStorage.library = JSON.stringify(library);
+  localStorage.lib = JSON.stringify(library);
 }
 
 function showBooks() {
@@ -36,7 +40,7 @@ function showBooks() {
 }
 
 function addBookToLibrary() {
-  const newBook = new Book(title.value, author.value, p_year.value, city.value);
+  const newBook = new Book(title.value, author.value, pages.value, read.value);
 
   library.push(newBook);
 
@@ -56,6 +60,14 @@ function loadLibrary() {
   }
   return books;
 }
+
+// function changeRead() {
+//   const { id } = this.parentNode;
+//   const para = this.parentNode.querySelector('p');
+//   library[id].read = !library[id].read;
+//   para.innerHTML = library[id].info();
+//   saveLibrary();
+// }
 
 if (localStorage.lib) {
   library = loadLibrary();
