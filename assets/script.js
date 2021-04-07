@@ -4,8 +4,6 @@ const title = document.querySelector('#title');
 const author = document.querySelector('#author');
 const pages = document.querySelector('#pages');
 const read = document.querySelector('#read');
-// const notRead = document.querySelector('#not-read');
-// const read = document.querySelectorAll('input[name='read-check']');
 const button = document.querySelector('#btn');
 const form = document.querySelector('form');
 const newBookBtn = document.querySelector('#form');
