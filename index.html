@@ -4,38 +4,26 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Library App</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-  <link rel="stylesheet" href="styles.css">
+  <title>Document</title>
+  <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-  
-  <button type="button" class="btn btn-dark my-3 collapsible">Add a new book</button>
-
-  <form class="content form" >
-    <div class="mb-3">
-      <label for="title" class="form-label">Title</label>
-      <input type="text" class="form-control" id="title" aria-describedby="titleHelp">
-    </div>
-    <div class="mb-3">
-      <label for="author" class="form-label">Author</label>
-      <input type="text" class="form-control" id="author">
-    </div>
-    <div class="mb-3">
-      <label for="p_year" class="form-label">Publication Year</label>
-      <input type="text" class="form-control" id="p_year">
-    </div>
-    <div class="mb-3">
-      <label for="city" class="form-label">City</label>
-      <input type="text" class="form-control" id="city">
-    </div>
-    <button type="submit" class="btn btn-primary" id='f_submit'>Submit</button>
+  <h1>New Book!</h1>
+  <button id="form">NEW BOOK</button>
+  <form action="" class="hidden">
+    <label for="title">Title</label><br>
+    <input id='title' type="text"> <br>
+    <label for="author">Author</label><br>
+    <input id='author' type="text"> <br>
+    <label for="p_year">Publication year</label><br>
+    <input id='p_year' type="number"> <br>
+    <label for="city">City</label><br>
+    <input id='city' type="text"> <br>
   </form>
-  
-  
+  <button id="btn" class="hidden">Create Book!</button>
   <div class="container">
-  
+    
   </div>
-  <script src="main.js"></script>
+  <script src="assets/script.js"></script>
 </body>
 </html>

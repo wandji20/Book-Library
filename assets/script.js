@@ -1,58 +1,52 @@
-let myLibrary = [];
+let library = [];
 const container = document.querySelector('.container');
 const title = document.querySelector('#title');
 const author = document.querySelector('#author');
 const p_year = document.querySelector('#p_year');
 const city = document.querySelector('#city');
-const form = document.querySelector('.form');
-const f_submit = document.querySelector('#f_submit');
-
+const button = document.querySelector('#btn');
+const form = document.querySelector('form');
+const newBookBtn = document.querySelector('#form');
 
 function Book(title, author, p_year, city) {
   this.title = title;
-  this.author =author;
+  this.author = author;
   this.p_year = p_year;
   this.city = city;
 }
 
+Book.prototype.info = function () {
+  return `${this.title} by ${this.author}, ${this.pages} pages, ${this.p_year} p_year, ${this.city} city`;
+};
+
 function saveLibrary() {
-  localStorage.lib = JSON.stringify(myLibrary);
+  localStorage.library = JSON.stringify(library);
 }
 
-
-var coll = document.getElementsByClassName("collapsible");
-
-for (var i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
-}
-
-function displayBooks(){
-  container.innerHTML = "";
-
-  for(let i= 0; i<library.length; i++){
+function showBooks() {
+  container.innerHTML = '';
+  for (let i = 0; i < library.length; i += 1) {
     const content = document.createElement('div');
-    content.setAttribute('id',i);
+    content.setAttribute('id', i);
     const text = document.createElement('p');
     text.textContent = library[i].info();
-
     content.appendChild(text);
     container.appendChild(content);
   }
 }
 
-function addBookToLibrary(){
+function addBookToLibrary() {
   const newBook = new Book(title.value, author.value, p_year.value, city.value);
-  myLibrary.push(newBook);
+
+  library.push(newBook);
+
   saveLibrary();
-  displayBooks();
+  showBooks();
+}
+
+function showForm() {
+  form.classList.toggle('hidden');
+  button.classList.toggle('hidden');
 }
 
 function loadLibrary() {
@@ -67,3 +61,7 @@ if (localStorage.lib) {
   library = loadLibrary();
   showBooks();
 }
+
+button.addEventListener('click', addBookToLibrary);
+
+newBookBtn.addEventListener('click', showForm);
