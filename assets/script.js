@@ -93,10 +93,7 @@ function showForm() {
   button.classList.toggle('hidden');
 }
 
-// if (localStorage.lib) {
-//   mylibrary = library.loadLibrary();
 library.showBooks();
-// }
 
 button.addEventListener('click', library.addBookToLibrary);
 
