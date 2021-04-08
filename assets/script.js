@@ -20,7 +20,7 @@ const Book = (title, author, pages, read) => {
   const changeRead = () => { read = !read; };
 
   return {
-    changeRead, info, getTitle, getAuthor, getPages, getRead
+    changeRead, info, getTitle, getAuthor, getPages, getRead,
   };
 };
 
