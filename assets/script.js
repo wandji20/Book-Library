@@ -9,34 +9,17 @@ const form = document.querySelector('form');
 const newBookBtn = document.querySelector('#form');
 
 
-
-// function Book(title, author, pages, read) {
-//   this.title = title;
-//   this.author = author;
-//   this.pages = pages;
-//   this.read = read;
-// }
-
-// Book.prototype.info = function Pro() {
-//   const readAlready = this.read
-//     ? 'This book is already read!'
-//     : 'This book is not read yet!';
-//   return `${this.title} by ${this.author}, ${this.pages} , ${readAlready}`;
-// };
-
-const bookFactory = (title, author, pages, read) => {
-  
-  return {title, author, pages, read, info};
-}
+const bookFactory = (title, author, pages, read) => ({
+  title, author, pages, read,
+});
 
 const info = (book) => {
-  const readAlready = book.read? 'This book is already read!' : 'This book is not read yet!';
+  const readAlready = book.read ? 'This book is already read!' : 'This book is not read yet!';
   return `${book.title} by ${book.author}, ${book.pages} , ${readAlready}`;
-}
+};
 
-const library = (() =>{
-  
-  mylibrary = []
+const library = (() => {
+  let mylibrary = [];
   function saveLibrary() {
     localStorage.lib = JSON.stringify(mylibrary);
   }
@@ -46,8 +29,25 @@ const library = (() =>{
     return books;
   }
 
+  function changeRead() {
+    mylibrary = loadLibrary();
+    const { id } = this.parentNode;
+    const paragraph = this.parentNode.querySelector('p');
+    mylibrary[id].read = !mylibrary[id].read;
+    saveLibrary();
+    paragraph.innerHTML = info(loadLibrary()[id]);
+  }
+
+  function removeBook() {
+    mylibrary = loadLibrary();
+
+    const { id } = this.parentNode;
+    mylibrary.splice(id, 1);
+    saveLibrary(); // eslint-disable-next-line no-use-before-define
+    showBooks();
+  }
+
   function showBooks() {
-    
     container.innerHTML = '';
     for (let i = 0; i < loadLibrary().length; i += 1) {
       const content = document.createElement('div');
@@ -56,15 +56,15 @@ const library = (() =>{
       text.textContent = info(loadLibrary()[i]);
       content.appendChild(text);
       container.appendChild(content);
-  
+
       const changeReadBtn = document.createElement('button');
       changeReadBtn.addEventListener('click', changeRead);
       changeReadBtn.textContent = 'Change read status';
-  
+
       const removeBtn = document.createElement('button');
       removeBtn.addEventListener('click', removeBook);
       removeBtn.textContent = 'Remove Book';
-  
+
       content.appendChild(text);
       content.appendChild(changeReadBtn);
       content.appendChild(removeBtn);
@@ -72,64 +72,31 @@ const library = (() =>{
     }
   }
 
-  
+
   function addBookToLibrary() {
-    const newBook = bookFactory (title.value, author.value, pages.value, read.value);
-  
+    const newBook = bookFactory(title.value, author.value, pages.value, read.value);
+
     mylibrary.push(newBook);
-  
-    saveLibrary();
-    showBooks();
-  }
-  
-  function changeRead() {
-    mylibrary = loadLibrary()
-    const { id } = this.parentNode;
-    const paragraph = this.parentNode.querySelector('p');
-    mylibrary[id].read = !mylibrary[id].read;
-    saveLibrary();
-    paragraph.innerHTML = info(loadLibrary()[id]);
-  }
-  
-  function removeBook() {
-    mylibrary = loadLibrary();
 
-    const { id } = this.parentNode;
-    mylibrary.splice(id, 1);
-    saveLibrary(); // eslint-disable-next-line no-use-before-define
+    saveLibrary();
     showBooks();
+  }
+
+
+  return {
+    saveLibrary, showBooks, loadLibrary, addBookToLibrary, changeRead, removeBook,
   };
-  return {saveLibrary, showBooks, loadLibrary,addBookToLibrary, changeRead, removeBook };
-  
 })();
-
-
-// const book = (() => {
-  
-
-//   return {}
-// })()
-
-
-
-
-
-
-
 
 function showForm() {
   form.classList.toggle('hidden');
   button.classList.toggle('hidden');
 }
 
-
-
-
-if (localStorage.lib) {
-  mylibrary = library.loadLibrary();
-  library.showBooks();
-}
-
+// if (localStorage.lib) {
+//   mylibrary = library.loadLibrary();
+library.showBooks();
+// }
 
 button.addEventListener('click', library.addBookToLibrary);
 
