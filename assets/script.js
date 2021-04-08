@@ -13,14 +13,16 @@ const Book = (title, author, pages, read) => {
   const getAuthor = () => author;
   const getPages = () => pages;
   const getRead = () => read;
-  const readAlready = () => read ? 'This book is already read!' : 'This book is not read yet!';
+  const readAlready = () => read ? 'This book is already read!' : 'This book is not read yet!'; //eslint-disable-line
 
   const info = () => `${getTitle()} written by ${getAuthor()}, ${getPages()} pages, Status: ${readAlready()}`;
 
   const changeRead = () => { read = !read; };
 
-  return { changeRead, info, getTitle, getAuthor, getPages, getRead };
-}
+  return { 
+    changeRead, info, getTitle, getAuthor, getPages, getRead 
+  };
+};
 
 function saveLibrary() {
   const tmp = []
