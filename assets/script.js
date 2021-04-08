@@ -19,20 +19,20 @@ const Book = (title, author, pages, read) => {
 
   const changeRead = () => { read = !read; };
 
-  return { 
-    changeRead, info, getTitle, getAuthor, getPages, getRead 
+  return {
+    changeRead, info, getTitle, getAuthor, getPages, getRead
   };
 };
 
 function saveLibrary() {
-  const tmp = []
+  const tmp = [];
 
-  for (let i = 0; i < library.length; i++) {
+  for (let i = 0; i < library.length; i += 1) {
     const information = [
       library[i].getTitle(),
       library[i].getAuthor(),
       library[i].getPages(),
-      library[i].getRead()
+      library[i].getRead(),
     ];
     tmp.push(information);
   }
@@ -56,7 +56,7 @@ function bookRead() {
 
 function showBooks() {
   container.innerHTML = '';
-  for (let i = 0; i < library.length; i++) {
+  for (let i = 0; i < library.length; i += 1) {
     const content = document.createElement('div');
     content.setAttribute('id', i);
     const text = document.createElement('p');
@@ -94,7 +94,7 @@ function showForm() {
 function loadLibrary() {
   const temprorary = JSON.parse(localStorage.lib);
   const books = [];
-  for (let i = 0; i < temprorary.length; i++) {
+  for (let i = 0; i < temprorary.length; i += 1) {
     books.push(Book(temprorary[i][0], temprorary[i][1], temprorary[i][2], temprorary[i][3]));
   }
   return books;
