@@ -1,4 +1,4 @@
-let library = [];
+
 const container = document.querySelector('.container');
 const title = document.querySelector('#title');
 const author = document.querySelector('#author');
@@ -8,91 +8,132 @@ const button = document.querySelector('#btn');
 const form = document.querySelector('form');
 const newBookBtn = document.querySelector('#form');
 
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
+
+
+// function Book(title, author, pages, read) {
+//   this.title = title;
+//   this.author = author;
+//   this.pages = pages;
+//   this.read = read;
+// }
+
+// Book.prototype.info = function Pro() {
+//   const readAlready = this.read
+//     ? 'This book is already read!'
+//     : 'This book is not read yet!';
+//   return `${this.title} by ${this.author}, ${this.pages} , ${readAlready}`;
+// };
+
+const bookFactory = (title, author, pages, read) => {
+  
+  return {title, author, pages, read, info};
 }
 
-Book.prototype.info = function Pro() {
-  const readAlready = this.read
-    ? 'This book is already read!'
-    : 'This book is not read yet!';
-  return `${this.title} by ${this.author}, ${this.pages} , ${readAlready}`;
-};
-
-function saveLibrary() {
-  localStorage.lib = JSON.stringify(library);
+const info = (book) => {
+  const readAlready = book.read? 'This book is already read!' : 'This book is not read yet!';
+  return `${book.title} by ${book.author}, ${book.pages} , ${readAlready}`;
 }
 
-function changeRead() {
-  const { id } = this.parentNode;
-  const paragraph = this.parentNode.querySelector('p');
-  library[id].read = !library[id].read;
-  paragraph.innerHTML = library[id].info();
-  saveLibrary();
-}
-
-function removeBook() {
-  const { id } = this.parentNode;
-  library.splice(id, 1);
-  saveLibrary(); // eslint-disable-next-line no-use-before-define
-  showBooks();
-}
-
-function showBooks() {
-  container.innerHTML = '';
-  for (let i = 0; i < library.length; i += 1) {
-    const content = document.createElement('div');
-    content.setAttribute('id', i);
-    const text = document.createElement('p');
-    text.textContent = library[i].info();
-    content.appendChild(text);
-    container.appendChild(content);
-
-    const changeReadBtn = document.createElement('button');
-    changeReadBtn.addEventListener('click', changeRead);
-    changeReadBtn.textContent = 'Change read status';
-
-    const removeBtn = document.createElement('button');
-    removeBtn.addEventListener('click', removeBook);
-    removeBtn.textContent = 'Remove Book';
-
-    content.appendChild(text);
-    content.appendChild(changeReadBtn);
-    content.appendChild(removeBtn);
-    container.appendChild(content);
+const library = (() =>{
+  
+  mylibrary = []
+  function saveLibrary() {
+    localStorage.lib = JSON.stringify(mylibrary);
   }
-}
 
-function addBookToLibrary() {
-  const newBook = new Book(title.value, author.value, pages.value, read.value);
+  function loadLibrary() {
+    const books = JSON.parse(localStorage.lib);
+    return books;
+  }
 
-  library.push(newBook);
+  function showBooks() {
+    
+    container.innerHTML = '';
+    for (let i = 0; i < loadLibrary().length; i += 1) {
+      const content = document.createElement('div');
+      content.setAttribute('id', i);
+      const text = document.createElement('p');
+      text.textContent = info(loadLibrary()[i]);
+      content.appendChild(text);
+      container.appendChild(content);
+  
+      const changeReadBtn = document.createElement('button');
+      changeReadBtn.addEventListener('click', changeRead);
+      changeReadBtn.textContent = 'Change read status';
+  
+      const removeBtn = document.createElement('button');
+      removeBtn.addEventListener('click', removeBook);
+      removeBtn.textContent = 'Remove Book';
+  
+      content.appendChild(text);
+      content.appendChild(changeReadBtn);
+      content.appendChild(removeBtn);
+      container.appendChild(content);
+    }
+  }
 
-  saveLibrary();
-  showBooks();
-}
+  
+  function addBookToLibrary() {
+    const newBook = bookFactory (title.value, author.value, pages.value, read.value);
+  
+    mylibrary.push(newBook);
+  
+    saveLibrary();
+    showBooks();
+  }
+  
+  function changeRead() {
+    mylibrary = loadLibrary()
+    const { id } = this.parentNode;
+    const paragraph = this.parentNode.querySelector('p');
+
+
+    mylibrary[id].read = !mylibrary[id].read;
+    saveLibrary();
+
+    
+    paragraph.innerHTML = info(loadLibrary()[id]);
+ 
+  }
+  
+  function removeBook() {
+    const { id } = this.parentNode;
+    library.splice(id, 1);
+    saveLibrary(); // eslint-disable-next-line no-use-before-define
+    showBooks();
+  };
+  return {saveLibrary, showBooks, loadLibrary,addBookToLibrary, changeRead, removeBook };
+  
+})();
+
+
+// const book = (() => {
+  
+
+//   return {}
+// })()
+
+
+
+
+
+
+
 
 function showForm() {
   form.classList.toggle('hidden');
   button.classList.toggle('hidden');
 }
 
-function loadLibrary() {
-  const books = JSON.parse(localStorage.lib);
-  for (let i = 0; i < books.length; i += 1) {
-    Object.setPrototypeOf(books[i], Book.prototype);
-  }
-  return books;
-}
+
+
 
 if (localStorage.lib) {
-  library = loadLibrary();
-  showBooks();
+  mylibrary = library.loadLibrary();
+  library.showBooks();
 }
 
-button.addEventListener('click', addBookToLibrary);
+
+button.addEventListener('click', library.addBookToLibrary);
 
 newBookBtn.addEventListener('click', showForm);
