@@ -92,8 +92,10 @@ const library = (() =>{
   }
   
   function removeBook() {
+    mylibrary = loadLibrary();
+
     const { id } = this.parentNode;
-    library.splice(id, 1);
+    mylibrary.splice(id, 1);
     saveLibrary(); // eslint-disable-next-line no-use-before-define
     showBooks();
   };
