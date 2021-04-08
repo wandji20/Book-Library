@@ -86,14 +86,9 @@ const library = (() =>{
     mylibrary = loadLibrary()
     const { id } = this.parentNode;
     const paragraph = this.parentNode.querySelector('p');
-
-
     mylibrary[id].read = !mylibrary[id].read;
     saveLibrary();
-
-    
     paragraph.innerHTML = info(loadLibrary()[id]);
- 
   }
   
   function removeBook() {
