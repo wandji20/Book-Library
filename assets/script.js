@@ -14,18 +14,18 @@ const Book = (title, author, pages, read) => {
   const getPages = () => pages;
   const getRead = () => read;
   const readAlready = () => read ? 'This book is already read!' : 'This book is not read yet!';
-  
+
   const info = () => `${getTitle()} written by ${getAuthor()}, ${getPages()} pages, Status: ${readAlready()}`;
-  
+
   const changeRead = () => { read = !read; };
 
-  return {changeRead, info, getTitle, getAuthor, getPages, getRead};
+  return { changeRead, info, getTitle, getAuthor, getPages, getRead };
 }
 
 function saveLibrary() {
   const tmp = []
 
-  for(let i = 0; i<library.length; i++){
+  for (let i = 0; i < library.length; i++) {
     const information = [
       library[i].getTitle(),
       library[i].getAuthor(),
@@ -93,7 +93,7 @@ function loadLibrary() {
   const temprorary = JSON.parse(localStorage.lib);
   const books = [];
   for (let i = 0; i < temprorary.length; i++) {
-    books.push(Book(temprorary[i][0],temprorary[i][1],temprorary[i][2],temprorary[i][3]));
+    books.push(Book(temprorary[i][0], temprorary[i][1], temprorary[i][2], temprorary[i][3]));
   }
   return books;
 }
