@@ -8,30 +8,33 @@ const button = document.querySelector('#btn');
 const form = document.querySelector('form');
 const newBookBtn = document.querySelector('#form');
 
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
-}
+const Book = (title, author, pages, read) => {
+  const getTitle = () => title;
+  const getAuthor = () => author;
+  const getPages = () => pages;
+  const getRead = () => read;
+  const readAlready = () => read ? 'This book is already read!' : 'This book is not read yet!';
+  
+  const info = () => `${getTitle()} written by ${getAuthor()}, ${getPages()} pages, Status: ${readAlready()}`;
+  
+  const changeRead = () => { read = !read; };
 
-Book.prototype.info = function Pro() {
-  const readAlready = this.read
-    ? 'This book is already read!'
-    : 'This book is not read yet!';
-  return `${this.title} by ${this.author}, ${this.pages} , ${readAlready}`;
-};
+  return {changeRead, info, getTitle, getAuthor, getPages, getRead};
+}
 
 function saveLibrary() {
-  localStorage.lib = JSON.stringify(library);
-}
+  const tmp = []
 
-function changeRead() {
-  const { id } = this.parentNode;
-  const paragraph = this.parentNode.querySelector('p');
-  library[id].read = !library[id].read;
-  paragraph.innerHTML = library[id].info();
-  saveLibrary();
+  for(let i = 0; i<library.length; i++){
+    const information = [
+      library[i].getTitle(),
+      library[i].getAuthor(),
+      library[i].getPages(),
+      library[i].getRead()
+    ];
+    tmp.push(information);
+  }
+  localStorage.lib = JSON.stringify(tmp);
 }
 
 function removeBook() {
@@ -41,23 +44,29 @@ function removeBook() {
   showBooks();
 }
 
+function bookRead() {
+  const { id } = this.parentNode;
+  const para = this.parentNode.querySelector('p');
+  library[id].changeRead();
+  para.innerHTML = library[id].info();
+  saveLibrary();
+}
+
 function showBooks() {
   container.innerHTML = '';
-  for (let i = 0; i < library.length; i += 1) {
+  for (let i = 0; i < library.length; i++) {
     const content = document.createElement('div');
     content.setAttribute('id', i);
     const text = document.createElement('p');
     text.textContent = library[i].info();
-    content.appendChild(text);
-    container.appendChild(content);
 
     const changeReadBtn = document.createElement('button');
-    changeReadBtn.addEventListener('click', changeRead);
+    changeReadBtn.addEventListener('click', bookRead);
     changeReadBtn.textContent = 'Change read status';
 
     const removeBtn = document.createElement('button');
     removeBtn.addEventListener('click', removeBook);
-    removeBtn.textContent = 'Remove Book';
+    removeBtn.textContent = 'Remove this book';
 
     content.appendChild(text);
     content.appendChild(changeReadBtn);
@@ -67,7 +76,7 @@ function showBooks() {
 }
 
 function addBookToLibrary() {
-  const newBook = new Book(title.value, author.value, pages.value, read.value);
+  const newBook = Book(title.value, author.value, pages.value, read.value);
 
   library.push(newBook);
 
@@ -81,9 +90,10 @@ function showForm() {
 }
 
 function loadLibrary() {
-  const books = JSON.parse(localStorage.lib);
-  for (let i = 0; i < books.length; i += 1) {
-    Object.setPrototypeOf(books[i], Book.prototype);
+  const temprorary = JSON.parse(localStorage.lib);
+  const books = [];
+  for (let i = 0; i < temprorary.length; i++) {
+    books.push(Book(temprorary[i][0],temprorary[i][1],temprorary[i][2],temprorary[i][3]));
   }
   return books;
 }
