@@ -14,7 +14,7 @@ class Book {
     this.author = author;
     this.pages = pages;
     this.read = read;
-  };
+  }
 
   info() {
     const readAlready = (this.read) ? 'already read' : 'not read yet';
