@@ -38,7 +38,7 @@ function loadLibrary() {
 
   return realBooks;
 }
-
+// eslint-disable-next-line no-unused-vars
 function changeRead() {
   const mylibrary = loadLibrary();
   const { id } = this.parentNode;
@@ -47,7 +47,7 @@ function changeRead() {
   localStorage.lib = JSON.stringify(mylibrary);
   paragraph.innerHTML = loadLibrary()[id].info();
 }
-
+// eslint-disable-next-line no-unused-vars
 function removeBook() {
   const mylibrary = loadLibrary();
 
@@ -57,8 +57,6 @@ function removeBook() {
   showBooks();
 }
 function showBooks() {
-
-
   const container = document.querySelector('.container');
   container.innerHTML = '';
   for (let i = 0; i < loadLibrary().length; i += 1) {
