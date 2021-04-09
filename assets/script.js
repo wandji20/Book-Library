@@ -8,48 +8,35 @@ const button = document.querySelector('#btn');
 const form = document.querySelector('form');
 const newBookBtn = document.querySelector('#form');
 
-const Book = (title, author, pages, read) => {
-  const getTitle = () => title;
-  const getAuthor = () => author;
-  const getPages = () => pages;
-  const getRead = () => read;
-  const readAlready = () => read ? 'This book is already read!' : 'This book is not read yet!'; //eslint-disable-line
-
-  const info = () => `${getTitle()} written by ${getAuthor()}, ${getPages()} pages, Status: ${readAlready()}`;
-
-  const changeRead = () => { read = !read; };
-
-  return {
-    changeRead, info, getTitle, getAuthor, getPages, getRead,
+class Book {
+  constructor(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
   };
-};
+
+  info() {
+    const readAlready = (this.read) ? 'already read' : 'not read yet';
+    return `${this.title} by ${this.author}, ${this.pages} pages, ${readAlready}`;
+  }
+}
 
 function saveLibrary() {
-  const tmp = [];
-
-  for (let i = 0; i < library.length; i += 1) {
-    const information = [
-      library[i].getTitle(),
-      library[i].getAuthor(),
-      library[i].getPages(),
-      library[i].getRead(),
-    ];
-    tmp.push(information);
-  }
-  localStorage.lib = JSON.stringify(tmp);
+  localStorage.lib = JSON.stringify(library);
 }
 
 function removeBook() {
   const { id } = this.parentNode;
   library.splice(id, 1);
-  saveLibrary(); // eslint-disable-next-line no-use-before-define
-  showBooks();
+  saveLibrary();
+  showBooks(); // eslint-disable-line
 }
 
 function bookRead() {
   const { id } = this.parentNode;
   const para = this.parentNode.querySelector('p');
-  library[id].changeRead();
+  library[id].read = !library[id].read;
   para.innerHTML = library[id].info();
   saveLibrary();
 }
@@ -78,7 +65,7 @@ function showBooks() {
 }
 
 function addBookToLibrary() {
-  const newBook = Book(title.value, author.value, pages.value, read.value);
+  const newBook = new Book(title.value, author.value, pages.value, read.value);
 
   library.push(newBook);
 
@@ -95,7 +82,7 @@ function loadLibrary() {
   const temprorary = JSON.parse(localStorage.lib);
   const books = [];
   for (let i = 0; i < temprorary.length; i += 1) {
-    books.push(Book(temprorary[i][0], temprorary[i][1], temprorary[i][2], temprorary[i][3]));
+    books.push(new Book(temprorary[i][0], temprorary[i][1], temprorary[i][2], temprorary[i][3]));
   }
   return books;
 }
