@@ -3,23 +3,24 @@ const container = document.querySelector('.container');
 const title = document.querySelector('#title');
 const author = document.querySelector('#author');
 const pages = document.querySelector('#pages');
-const read = document.querySelector('#read');
+const read = document.getElementById('read');
+const notread = document.getElementById('notread');
 const button = document.querySelector('#btn');
 const form = document.querySelector('form');
 const newBookBtn = document.querySelector('#form');
 
 class Book {
-  constructor(title, author, pages, read) {
+  constructor(title, author, pages, readStatus) {
     this.title = title;
     this.author = author;
     this.pages = pages;
-    this.read = read;
+    this.readStatus = readStatus;
+  }
+  info () {
+      const readAlready = (this.readStatus) ? 'Read' : 'Not read';
+      return `${this.title} by ${this.author}, ${this.pages} pages, ${readAlready}`;
   }
 
-  info() {
-    const readAlready = (this.read) ? 'already read' : 'not read yet';
-    return `${this.title} by ${this.author}, ${this.pages} pages, ${readAlready}`;
-  }
 }
 
 function saveLibrary() {
@@ -36,7 +37,7 @@ function removeBook() {
 function bookRead() {
   const { id } = this.parentNode;
   const para = this.parentNode.querySelector('p');
-  library[id].read = !library[id].read;
+  library[id].readStatus = !library[id].readStatus;
   para.innerHTML = library[id].info();
   saveLibrary();
 }
@@ -65,7 +66,7 @@ function showBooks() {
 }
 
 function addBookToLibrary() {
-  const newBook = new Book(title.value, author.value, pages.value, read.value);
+  const newBook = new Book(title.value, author.value, pages.value, read.checked);
 
   library.push(newBook);
 
@@ -79,11 +80,10 @@ function showForm() {
 }
 
 function loadLibrary() {
-  const temprorary = JSON.parse(localStorage.lib);
-  const books = [];
-  for (let i = 0; i < temprorary.length; i += 1) {
-    books.push(new Book(temprorary[i][0], temprorary[i][1], temprorary[i][2], temprorary[i][3]));
-  }
+  const books = JSON.parse(localStorage.lib);
+  for (let i = 0; i < books.length; i += 1) {
+    Object.setPrototypeOf(books[i], Book.prototype);
+  } 
   return books;
 }
 
