@@ -16,11 +16,11 @@ class Book {
     this.pages = pages;
     this.readStatus = readStatus;
   }
+
   info () {
       const readAlready = (this.readStatus) ? 'Read' : 'Not read';
       return `${this.title} by ${this.author}, ${this.pages} pages, ${readAlready}`;
   }
-
 }
 
 function saveLibrary() {
@@ -53,11 +53,11 @@ function showBooks() {
 
     const changeReadBtn = document.createElement('button');
     changeReadBtn.addEventListener('click', bookRead);
-    changeReadBtn.textContent = 'Change read status';
+    changeReadBtn.textContent = 'Change status';
 
     const removeBtn = document.createElement('button');
     removeBtn.addEventListener('click', removeBook);
-    removeBtn.textContent = 'Remove this book';
+    removeBtn.textContent = 'Remove';
 
     content.appendChild(text);
     content.appendChild(changeReadBtn);
