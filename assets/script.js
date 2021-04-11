@@ -7,7 +7,7 @@ const read = document.getElementById('read');
 const notread = document.getElementById('notread');
 const button = document.querySelector('#btn');
 const form = document.querySelector('form');
-const newBookBtn = document.querySelector('#form');
+const addNewBook = document.querySelector('#form-btn');
 
 class Book {
   constructor(title, author, pages, readStatus) {
@@ -47,6 +47,7 @@ function showBooks() {
   for (let i = 0; i < library.length; i += 1) {
     const content = document.createElement('div');
     content.setAttribute('id', i);
+
     const text = document.createElement('p');
     text.textContent = library[i].info();
 
@@ -94,4 +95,4 @@ if (localStorage.lib) {
 
 button.addEventListener('click', addBookToLibrary);
 
-newBookBtn.addEventListener('click', showForm);
+addNewBook.addEventListener('click', showForm);

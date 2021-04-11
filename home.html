@@ -5,29 +5,35 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-  <h1>Library</h1>
-  <button id="form">Add a new book</button>
-  <form action="" class="hidden">
-    <label for="title">Title</label><br>
-    <input id='title' type="text"> <br>
-    <label for="author">Author</label><br>
-    <input id='author' type="text"> <br>
-    <label for="pages">Number of Pages</label><br>
-    <input id='pages' type="number"> <br>
-    
-    <input type="radio" id="read" name="read-status" value="read">
-    <label for="read"> I have read this book</label><br>
-    <input type="radio" id="notread" name="read-status" value="not-read">
-    <label for="notread"> I have not read this book</label><br>
+  <div class="text-center mt-5">
+    <h1 class="font-weight-bold bg-dark text-white">Library</h1>
+    <button id="form-btn" class="btn bg-dark text-white font-weight-bold">Add a new book</button>
+    <form action="" class="hidden m-5">
+      <label for="title">Title</label><br>
+      <input id='title' type="text"> <br>
+      <label for="author">Author</label><br>
+      <input id='author' type="text"> <br>
+      <label for="pages">Number of Pages</label><br>
+      <input id='pages' type="number"> <br>
+      
+      <input type="radio" id="read" name="read-status" value="read">
+      <label for="read"> I have read this book</label><br>
+      <input type="radio" id="notread" name="read-status" value="not-read">
+      <label for="notread"> I have not read this book</label><br>
 
-  </form>
-  <button id="btn" class="hidden">Create Book!</button>
-  <div class="container">
+    </form>
+    <button id="btn" class="hidden btn btn-secondary">Create book</button>
+  </div>
+  <h2 class="text-center mt-5 bg-secondary text-white">List of Books</h2>
+  <div class="container text-center mt-3">
+
     
   </div>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
   <script src="assets/script.js"></script>
 </body>
 </html>
