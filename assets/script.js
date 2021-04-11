@@ -3,53 +3,41 @@ const container = document.querySelector('.container');
 const title = document.querySelector('#title');
 const author = document.querySelector('#author');
 const pages = document.querySelector('#pages');
-const read = document.querySelector('#read');
+const read = document.getElementById('read');
+const notread = document.getElementById('notread');
 const button = document.querySelector('#btn');
 const form = document.querySelector('form');
-const newBookBtn = document.querySelector('#form');
+const addNewBook = document.querySelector('#form-btn');
 
-const Book = (title, author, pages, read) => {
-  const getTitle = () => title;
-  const getAuthor = () => author;
-  const getPages = () => pages;
-  const getRead = () => read;
-  const readAlready = () => read ? 'This book is already read!' : 'This book is not read yet!'; //eslint-disable-line
+class Book {
+  constructor(title, author, pages, readStatus) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.readStatus = readStatus;
+  }
 
-  const info = () => `${getTitle()} written by ${getAuthor()}, ${getPages()} pages, Status: ${readAlready()}`;
-
-  const changeRead = () => { read = !read; };
-
-  return {
-    changeRead, info, getTitle, getAuthor, getPages, getRead,
-  };
-};
+  info () {
+      const readAlready = (this.readStatus) ? 'Read' : 'Not read';
+      return `${this.title} by ${this.author}, ${this.pages} pages, ${readAlready}`;
+  }
+}
 
 function saveLibrary() {
-  const tmp = [];
-
-  for (let i = 0; i < library.length; i += 1) {
-    const information = [
-      library[i].getTitle(),
-      library[i].getAuthor(),
-      library[i].getPages(),
-      library[i].getRead(),
-    ];
-    tmp.push(information);
-  }
-  localStorage.lib = JSON.stringify(tmp);
+  localStorage.lib = JSON.stringify(library);
 }
 
 function removeBook() {
   const { id } = this.parentNode;
   library.splice(id, 1);
-  saveLibrary(); // eslint-disable-next-line no-use-before-define
-  showBooks();
+  saveLibrary();
+  showBooks(); // eslint-disable-line
 }
 
 function bookRead() {
   const { id } = this.parentNode;
   const para = this.parentNode.querySelector('p');
-  library[id].changeRead();
+  library[id].readStatus = !library[id].readStatus;
   para.innerHTML = library[id].info();
   saveLibrary();
 }
@@ -59,16 +47,17 @@ function showBooks() {
   for (let i = 0; i < library.length; i += 1) {
     const content = document.createElement('div');
     content.setAttribute('id', i);
+
     const text = document.createElement('p');
     text.textContent = library[i].info();
 
     const changeReadBtn = document.createElement('button');
     changeReadBtn.addEventListener('click', bookRead);
-    changeReadBtn.textContent = 'Change read status';
+    changeReadBtn.textContent = 'Change status';
 
     const removeBtn = document.createElement('button');
     removeBtn.addEventListener('click', removeBook);
-    removeBtn.textContent = 'Remove this book';
+    removeBtn.textContent = 'Remove';
 
     content.appendChild(text);
     content.appendChild(changeReadBtn);
@@ -78,7 +67,7 @@ function showBooks() {
 }
 
 function addBookToLibrary() {
-  const newBook = Book(title.value, author.value, pages.value, read.value);
+  const newBook = new Book(title.value, author.value, pages.value, read.checked);
 
   library.push(newBook);
 
@@ -92,11 +81,10 @@ function showForm() {
 }
 
 function loadLibrary() {
-  const temprorary = JSON.parse(localStorage.lib);
-  const books = [];
-  for (let i = 0; i < temprorary.length; i += 1) {
-    books.push(Book(temprorary[i][0], temprorary[i][1], temprorary[i][2], temprorary[i][3]));
-  }
+  const books = JSON.parse(localStorage.lib);
+  for (let i = 0; i < books.length; i += 1) {
+    Object.setPrototypeOf(books[i], Book.prototype);
+  } 
   return books;
 }
 
@@ -107,4 +95,4 @@ if (localStorage.lib) {
 
 button.addEventListener('click', addBookToLibrary);
 
-newBookBtn.addEventListener('click', showForm);
+addNewBook.addEventListener('click', showForm);
